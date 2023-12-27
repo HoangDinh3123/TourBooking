@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DatTour.Models.DiaDiemDuLich>
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-fluid" src=@("/img/" + item.HinhAnh) alt="">
+                        <div class="p-4">
+                            <a class="h5 text-decoration-none" asp-action="ViewTourByLocation" asp-controller="Tours" asp-route-id="@item.ID"D">@item.TenDiaDiem</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+<!-- Packages End -->

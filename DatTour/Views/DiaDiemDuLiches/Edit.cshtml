@@ -1,0 +1,41 @@
+﻿@model DatTour.Models.DiaDiemDuLich
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+
+@*form theem*@
+
+<div id="my-form" class="wrapper">
+    <div class="inner">
+        <form asp-action="Edit" asp-controller="DiaDiemDuLiches" , new { enctype="multipart/form-data" }>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="HinhAnh" />
+            <div class="form-row">
+                <input type="text" asp-for="TenDiaDiem" class="form-control" placeholder="Tên địa điểm">
+            </div>
+            <div class="form-row">
+                <input type="text" class="form-control" asp-for="DiaChi" placeholder="Địa chỉ">
+            </div>
+
+            <div class="form-row">
+                <label class="labelfile" for="upload">Upload a file</label>
+                <input type="file" name="file" id="upload" />
+            </div>
+            <textarea asp-for="MoTa" id="" placeholder="Message" class="form-control" style="height: 130px;"></textarea>
+            <button>
+                Update
+            </button>
+        </form>
+
+    </div>
+
+    <div>
+        <a asp-action="ListDiaDiem" asp-controller="NguoiDungs">Back to List</a>
+    </div>
+</div>
+
+

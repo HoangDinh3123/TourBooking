@@ -1,0 +1,158 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var ChucVu = @HttpContextAccessor.HttpContext.Session.GetInt32("ChucVu");
+    var id = @HttpContextAccessor.HttpContext.Session.GetInt32("ID");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/css/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/css/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/css/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/css/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/CreateForm.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/styleAdmin.css">
+    <!-- endinject -->
+    <link href="~/fontawesome-free-6.3.0-web/fontawesome-free-6.3.0-web/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo mr-5" href="/Tours/Index"><img src="/img/logo.svg" class="mr-2" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/Tours/Index"><img src="/img/logo.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="/img/face28.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a asp-action="Index" asp-controller="Tours" class="dropdown-item">
+                                Về trang chủ
+                            </a>
+                            <a asp-action="LogOut" asp-controller="NguoiDungs" class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close ti-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+
+                </div>
+            </div>
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Index" asp-controller="NguoiDungs">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Trang người dùng</span>
+                        </a>
+                    </li>
+                    @if (ChucVu == 1)
+                    {
+                        <li class="nav-item">
+                            <a asp-action="ListTour" asp-controller="NguoiDungs" class="nav-link">
+                                <i class="icon-layout menu-icon"></i>
+                                <span class="menu-title">Quản lý Tour</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-action="ListDiaDiem" asp-controller="NguoiDungs" class="nav-link">
+                                <i class="icon-layout menu-icon"></i>
+                                <span class="menu-title">Quản lý địa điểm</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-action="ListTinTuc" asp-controller="NguoiDungs" class="nav-link">
+                                <i class="icon-layout menu-icon"></i>
+                                <span class="menu-title">Quản lý tin tức</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a asp-action="TourCuaBan" asp-controller="NguoiDungs" asp-route-id="@id" class="nav-link">
+                                <i class="icon-layout menu-icon"></i>
+                                <span class="menu-title">Tour của bạn</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+            </nav>
+            <!-- partial -->
+            @RenderBody()
+            <!-- main-panel ends -->
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+        </div>
+    </footer>
+</body>
+
+</html>
+<script src="/js/vendor.bundle.base.js"></script>
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/todolist.js"></script>
+
+<script>
+    var showFormButton = document.getElementById('show-form-button');
+    var myForm = document.getElementById('my-form');
+
+    showFormButton.addEventListener('click', function () {
+        if (myForm.style.display === 'none') {
+            myForm.style.display = 'block';
+            showFormButton.textContent = 'Ẩn Form';
+        } else {
+            myForm.style.display = 'none';
+            showFormButton.textContent = 'Hiển thị Form';
+        }
+    });
+</script>

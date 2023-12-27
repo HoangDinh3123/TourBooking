@@ -1,0 +1,32 @@
+﻿@model DatTour.Models.TinTuc
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+
+@*form theem*@
+
+<div id="my-form" class="wrapper">
+    <div class="inner">
+        <form asp-action="Edit" asp-controller="TinTucs" , new { enctype="multipart/form-data" }>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="NguoiDungID" />
+            <div class="form-row">
+                <input type="text" asp-for="TenTinTuc" class="form-control" placeholder="Tên tin tức">
+            </div>
+
+            <textarea asp-for="NoiDung" id="" placeholder="Message" class="form-control" style="height: 130px;"></textarea>
+            <button>
+                Update
+            </button>
+        </form>
+
+    </div>
+
+    <div>
+        <a asp-action="ListTinTuc" asp-controller="NguoiDungs">Back to List</a>
+    </div>
+</div>

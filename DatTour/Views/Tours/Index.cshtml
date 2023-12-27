@@ -1,0 +1,105 @@
+﻿@model IEnumerable<DatTour.Models.Tour>
+@{ 
+    List<top> t = (List<top>)ViewData["Bip"];
+    List<TinTuc> tinTuc = (List<TinTuc>)ViewData["TinTuc"];
+}
+
+
+<!-- Destination Start -->
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <a asp-action="Index" asp-controller="DiaDiemDuLiches">
+                <h3>Xem tất cả địa điểm</h3>
+            </a>
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destination</h6>
+            <h1>Top Destination</h1>
+        </div>
+        <div class="row">
+                
+                @foreach (var item in t)
+                {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="destination-item position-relative overflow-hidden mb-2">
+                                <img class="img-fluid" src=@("/img/" + item.HinhAnh) style="height: 250px; width: 500px" alt="">
+                                <a class="destination-overlay text-white text-decoration-none" asp-action="ViewTourByLocation" asp-route-id="@item.DiaDiemID">
+                                    <h5 class="text-white">@item.TenDiaDiem</h5>
+                                    <span>@item.SoLuong</span>
+                                </a>
+                            </div>
+                        </div>
+                }
+        </div>
+    </div>
+</div>
+<!-- Destination Start -->
+
+<!-- Packages Start -->
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <h1>Tous</h1>
+        </div>
+        <div class="row">
+            @foreach (var i in Model)
+            {
+                TimeSpan duration = i.NgayDi.Subtract(i.NgayVe);
+                String day = $"{duration.Days}";
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-fluid" src=@("/img/" + i.HinhAnh) style="height:300px;" alt="">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>@i.DiaDiemDuLich.TenDiaDiem</small>
+                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>@day ngày</small>
+                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>@i.SoCho người</small>
+                            </div>
+                            <a class="h5 text-decoration-none" asp-action="Details" asp-route-id="@i.ID">@i.TenTour</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="m-0">@i.GiaTien VND</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Packages End -->
+
+<!-- Blog Start -->
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Tin tức</h6>
+        </div>
+        <div class="row pb-3">
+            @foreach (var i in tinTuc)
+            {
+                <div class="col-lg-4 col-md-6 mb-4 pb-2">
+                    <div class="blog-item">
+                        <div class="position-relative">
+                            <img class="img-fluid w-100" style="height:250px" src=@("/img/" + i.HinhAnh) alt="">
+                            <div class="blog-date">
+                                <h6 class="font-weight-bold mb-n1">@i.NgayDang.Day</h6>
+                                <small class="text-white text-uppercase">@i.NgayDang.Month</small>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4">
+                            <div class="d-flex mb-2">
+                                <a class="text-primary text-uppercase text-decoration-none" href="">Admin</a>
+                                <span class="text-primary px-2">|</span>
+                                <a class="text-primary text-uppercase text-decoration-none" href="">Tours & Travel</a>
+                            </div>
+                            <a class="h5 m-0 text-decoration-none" asp-action="Details" asp-controller="TinTucs" asp-route-id="@i.ID">@i.TenTinTuc</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Blog End -->

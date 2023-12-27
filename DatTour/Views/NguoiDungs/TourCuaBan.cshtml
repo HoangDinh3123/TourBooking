@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DatTour.Models.DatChoTour>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="table-responsive">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h2>Quản lý <b>Tour của bạn</b></h2>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Tour</th>
+                    <th>Số chỗ</th>
+                    <th>Ngày đặt</th>
+                    <th>Ngày đi</th>
+                    <th>Thành tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+                {
+                <tr>
+                    <td>@i.ID</td>
+                    <td>@i.Tour.TenTour</td>
+                    <td>@i.SoCho</td>
+                    <td>@i.NgayDat</td>
+                    <td>@i.Tour.NgayDi</td>
+                    <td>@i.ThanhTien</td>
+                        @if (i.TrangThai == 1)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                                <td>
+                                    <a asp-action="ThanhToan" asp-controller="DatChoTours" asp-route-id="@i.ID" style="text-decoration: none;">Thanh toán</a>
+                                </td>
+                        }
+                        <td>
+                            <a asp-action="Delete" asp-controller="DatChoTours" asp-route-id="@i.ID" class="delete" title="Delete" data-toggle="tooltip" onclick="return confirm('Ban co chac muon xoa khong')"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

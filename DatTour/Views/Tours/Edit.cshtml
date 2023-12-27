@@ -1,0 +1,74 @@
+﻿@model DatTour.Models.Tour
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<DiaDiemDuLich> t = (List<DiaDiemDuLich>)ViewData["DiaDiemDuLich"];
+}
+
+<h1>Edit</h1>
+
+
+@*form theem*@
+
+<div id="my-form" class="wrapper">
+    <div class="inner">
+        <form asp-action="Edit" asp-controller="Tours" , new { enctype="multipart/form-data" }>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="HinhAnh" />
+            <div class="form-row">
+                <input type="text" asp-for="TenTour" class="form-control" placeholder="Tên tour">
+            </div>
+            <div class="form-row">
+                <input type="text" class="form-control" name="GiaTien" placeholder="Giá tiền" value="@Model.GiaTien">
+            </div>
+            <div class="form-row">
+                <label>Ngày đi</label>
+                <input type="date" class="form-control" id="birthday" asp-for="NgayDi">
+            </div>
+            <div class="form-row">
+                <label>Ngày về</label>
+                <input type="date" class="form-control" id="birthday" asp-for="NgayVe">
+            </div>
+            <div class="form-row">
+                <input type="text" class="form-control" asp-for="SoCho" placeholder="Số chỗ">
+            </div>
+            <div class="form-row">
+                <select id="selectDiaDiem" name="DiaDiemDuLichID" class="form-control">
+                    @foreach (var item in t)
+                    {
+                        <option value="@item.ID">@item.TenDiaDiem</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label class="labelfile" for="upload">Upload a file</label>
+                <input type="file" name="file" id="upload" />
+            </div>
+            <textarea asp-for="ThongTin" id="" placeholder="Message" class="form-control" style="height: 130px;"></textarea>
+            <button>
+                Update
+            </button>
+        </form>
+
+    </div>
+
+    <div>
+        <a asp-action="ListTour" asp-controller="NguoiDungs">Back to List</a>
+    </div>
+</div>
+
+<script>
+    var selectedValue = "@Model.DiaDiemDuLich.ID"; // Giá trị đã được chọn từ trước
+
+    // Thiết lập thuộc tính 'selected' cho phần tử option
+    var selectElement = document.getElementById('selectDiaDiem');
+    for (var i = 0; i < selectElement.options.length; i++) {
+        var optionValue = selectElement.options[i].value;
+        if (optionValue === selectedValue) {
+            selectElement.options[i].selected = true;
+            break;
+        }
+    }
+</script>
+
